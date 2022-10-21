@@ -21,18 +21,26 @@ public class PlayerController : MonoBehaviour
         {
             weapon.Fire();
         }
-
+        //move direction
         moveDirection = new Vector2(moveX, moveY).normalized;
+        //finds position of mouse
         mousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
 
     }
 
     private void FixedUpdate()
     {
+        //movement
         rb.velocity = new Vector2(moveDirection.x * moveSpeed, moveDirection.y * moveSpeed);
 
+        //aims at mouse
         Vector2 aimDirection = mousePosition - rb.position;
         float aimAngle = Mathf.Atan2(aimDirection.y, aimDirection.x) * Mathf.Rad2Deg - 90f;
         rb.rotation = aimAngle;
+    }
+
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        Destroy(gameObject);
     }
 }
